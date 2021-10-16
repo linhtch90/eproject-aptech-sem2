@@ -14,6 +14,9 @@ import java.util.UUID;
  */
 public class TestUUID {
     private static String generateRandomId() {
+        /*
+        Create a UUID
+        */
         UUID id = Generators.randomBasedGenerator().generate();
         return id.toString();
     }
