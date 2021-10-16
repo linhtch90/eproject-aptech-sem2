@@ -17,6 +17,7 @@ public class TestUUID {
         /*
         Create a UUID
         */
+        /*Comment by TOAN*/
         UUID id = Generators.randomBasedGenerator().generate();
         return id.toString();
     }
