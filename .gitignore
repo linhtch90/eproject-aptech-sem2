@@ -1,0 +1,12 @@
+/BookstoreManagement/target/
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+*.properties
+*.pdf
+signin_info.bin
