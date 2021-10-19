@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -58,6 +60,8 @@ public class ManagerMain extends javax.swing.JFrame {
      */
     private String theme;
     private String themeConfigFilePath = "theme.properties";
+    
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
@@ -110,6 +114,7 @@ public class ManagerMain extends javax.swing.JFrame {
 
         dilSignOut = new javax.swing.JDialog();
         radGroupThemes = new javax.swing.ButtonGroup();
+        radGroupLanguages = new javax.swing.ButtonGroup();
         tblManager = new javax.swing.JToolBar();
         bntBookManagement = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -128,6 +133,9 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuThemes = new javax.swing.JMenu();
         mniLightTheme = new javax.swing.JRadioButtonMenuItem();
         mniDarkTheme = new javax.swing.JRadioButtonMenuItem();
+        mnuLanguages = new javax.swing.JMenu();
+        mniEnglish = new javax.swing.JRadioButtonMenuItem();
+        mniVietnamese = new javax.swing.JRadioButtonMenuItem();
         mniSignOut = new javax.swing.JMenuItem();
         mniExit = new javax.swing.JMenuItem();
         mnuManagementTools = new javax.swing.JMenu();
@@ -150,13 +158,14 @@ public class ManagerMain extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Manager Board");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        setTitle(bundle.getString("ManagerMain.title")); // NOI18N
         setSize(new java.awt.Dimension(1000, 715));
 
         tblManager.setRollover(true);
 
         bntBookManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bookcase-48.png"))); // NOI18N
-        bntBookManagement.setText("Book Management");
+        bntBookManagement.setText(bundle.getString("ManagerMain.bntBookManagement.text")); // NOI18N
         bntBookManagement.setFocusable(false);
         bntBookManagement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bntBookManagement.setPreferredSize(new java.awt.Dimension(140, 50));
@@ -170,7 +179,7 @@ public class ManagerMain extends javax.swing.JFrame {
         tblManager.add(jSeparator3);
 
         bntReceiptsManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bill-48.png"))); // NOI18N
-        bntReceiptsManagement.setText("Receipts Management");
+        bntReceiptsManagement.setText(bundle.getString("ManagerMain.bntReceiptsManagement.text")); // NOI18N
         bntReceiptsManagement.setFocusable(false);
         bntReceiptsManagement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bntReceiptsManagement.setPreferredSize(new java.awt.Dimension(140, 50));
@@ -184,7 +193,7 @@ public class ManagerMain extends javax.swing.JFrame {
         tblManager.add(jSeparator2);
 
         bntSalesStatstics.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-statistics-48.png"))); // NOI18N
-        bntSalesStatstics.setText("Sale Statistics");
+        bntSalesStatstics.setText(bundle.getString("ManagerMain.bntSalesStatstics.text")); // NOI18N
         bntSalesStatstics.setFocusable(false);
         bntSalesStatstics.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bntSalesStatstics.setPreferredSize(new java.awt.Dimension(140, 50));
@@ -198,7 +207,7 @@ public class ManagerMain extends javax.swing.JFrame {
         tblManager.add(jSeparator1);
 
         bntUserManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-name-48.png"))); // NOI18N
-        bntUserManagement.setText("User Management");
+        bntUserManagement.setText(bundle.getString("ManagerMain.bntUserManagement.text")); // NOI18N
         bntUserManagement.setFocusable(false);
         bntUserManagement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bntUserManagement.setPreferredSize(new java.awt.Dimension(140, 50));
@@ -211,7 +220,7 @@ public class ManagerMain extends javax.swing.JFrame {
         tblManager.add(bntUserManagement);
         tblManager.add(jSeparator4);
 
-        jLabel1.setText("Welcome");
+        jLabel1.setText(bundle.getString("ManagerMain.jLabel1.text")); // NOI18N
 
         lblUserFullName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -224,7 +233,7 @@ public class ManagerMain extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(lblUserFullName))
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,13 +248,13 @@ public class ManagerMain extends javax.swing.JFrame {
         tblManager.add(jPanel1);
 
         mnuSystem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-administrative-tools-18.png"))); // NOI18N
-        mnuSystem.setText("System");
+        mnuSystem.setText(bundle.getString("ManagerMain.mnuSystem.text")); // NOI18N
 
         mnuThemes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/theme-menu-18.png"))); // NOI18N
-        mnuThemes.setText("Themes");
+        mnuThemes.setText(bundle.getString("ManagerMain.mnuThemes.text")); // NOI18N
 
         radGroupThemes.add(mniLightTheme);
-        mniLightTheme.setText("Light");
+        mniLightTheme.setText(bundle.getString("ManagerMain.mniLightTheme.text")); // NOI18N
         mniLightTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/light-theme-18.png"))); // NOI18N
         mniLightTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,7 +264,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuThemes.add(mniLightTheme);
 
         radGroupThemes.add(mniDarkTheme);
-        mniDarkTheme.setText("Dark");
+        mniDarkTheme.setText(bundle.getString("ManagerMain.mniDarkTheme.text")); // NOI18N
         mniDarkTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/dark-theme-18.png"))); // NOI18N
         mniDarkTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,8 +275,34 @@ public class ManagerMain extends javax.swing.JFrame {
 
         mnuSystem.add(mnuThemes);
 
+        mnuLanguages.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/languages-2-18.png"))); // NOI18N
+        mnuLanguages.setText(bundle.getString("ManagerMain.mnuLanguages.text")); // NOI18N
+
+        radGroupLanguages.add(mniEnglish);
+        mniEnglish.setSelected(true);
+        mniEnglish.setText(bundle.getString("ManagerMain.mniEnglish.text")); // NOI18N
+        mniEnglish.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/uk-flag-18.png"))); // NOI18N
+        mniEnglish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniEnglishActionPerformed(evt);
+            }
+        });
+        mnuLanguages.add(mniEnglish);
+
+        radGroupLanguages.add(mniVietnamese);
+        mniVietnamese.setText(bundle.getString("ManagerMain.mniVietnamese.text")); // NOI18N
+        mniVietnamese.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/vn-flag-18.png"))); // NOI18N
+        mniVietnamese.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniVietnameseActionPerformed(evt);
+            }
+        });
+        mnuLanguages.add(mniVietnamese);
+
+        mnuSystem.add(mnuLanguages);
+
         mniSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-import-18.png"))); // NOI18N
-        mniSignOut.setText("Sign Out");
+        mniSignOut.setText(bundle.getString("ManagerMain.mniSignOut.text")); // NOI18N
         mniSignOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniSignOutActionPerformed(evt);
@@ -276,7 +311,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuSystem.add(mniSignOut);
 
         mniExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-shutdown-18.png"))); // NOI18N
-        mniExit.setText("Exit Application");
+        mniExit.setText(bundle.getString("ManagerMain.mniExit.text")); // NOI18N
         mniExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniExitActionPerformed(evt);
@@ -287,7 +322,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnbManager.add(mnuSystem);
 
         mnuManagementTools.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-office-18.png"))); // NOI18N
-        mnuManagementTools.setText("Management Tools");
+        mnuManagementTools.setText(bundle.getString("ManagerMain.mnuManagementTools.text")); // NOI18N
         mnuManagementTools.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuManagementToolsActionPerformed(evt);
@@ -295,7 +330,7 @@ public class ManagerMain extends javax.swing.JFrame {
         });
 
         mniBooksMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bookcase-18.png"))); // NOI18N
-        mniBooksMan.setText("Books Management");
+        mniBooksMan.setText(bundle.getString("ManagerMain.mniBooksMan.text")); // NOI18N
         mniBooksMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniBooksManActionPerformed(evt);
@@ -304,7 +339,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuManagementTools.add(mniBooksMan);
 
         mniReceiptsMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bill-18.png"))); // NOI18N
-        mniReceiptsMan.setText("Receipts Management");
+        mniReceiptsMan.setText(bundle.getString("ManagerMain.mniReceiptsMan.text")); // NOI18N
         mniReceiptsMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniReceiptsManActionPerformed(evt);
@@ -313,7 +348,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuManagementTools.add(mniReceiptsMan);
 
         mniSalesStats.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-statistics-18.png"))); // NOI18N
-        mniSalesStats.setText("Sales statistics");
+        mniSalesStats.setText(bundle.getString("ManagerMain.mniSalesStats.text")); // NOI18N
         mniSalesStats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniSalesStatsActionPerformed(evt);
@@ -322,7 +357,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuManagementTools.add(mniSalesStats);
 
         mniUsersMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-name-18.png"))); // NOI18N
-        mniUsersMan.setText("Users Management");
+        mniUsersMan.setText(bundle.getString("ManagerMain.mniUsersMan.text")); // NOI18N
         mniUsersMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniUsersManActionPerformed(evt);
@@ -333,7 +368,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mnbManager.add(mnuManagementTools);
 
         mnuHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-help-18.png"))); // NOI18N
-        mnuHelp.setText("Help");
+        mnuHelp.setText(bundle.getString("ManagerMain.mnuHelp.text")); // NOI18N
         mnuHelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuHelpActionPerformed(evt);
@@ -341,7 +376,7 @@ public class ManagerMain extends javax.swing.JFrame {
         });
 
         mniAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-people-working-together-18.png"))); // NOI18N
-        mniAboutUs.setText("About Us");
+        mniAboutUs.setText(bundle.getString("ManagerMain.mniAboutUs.text")); // NOI18N
         mniAboutUs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniAboutUsActionPerformed(evt);
@@ -357,7 +392,7 @@ public class ManagerMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tblManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tblManager, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addComponent(tplManager)
         );
         layout.setVerticalGroup(
@@ -543,6 +578,65 @@ public class ManagerMain extends javax.swing.JFrame {
         this.changeTheme();
     }//GEN-LAST:event_mniDarkThemeActionPerformed
 
+    private void mniVietnameseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVietnameseActionPerformed
+        // TODO add your handling code here:
+        Locale locale = new Locale("vi", "VN");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
+        bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
+        mniUsersMan.setText(resourceBundle.getString("ManagerMain.mniUsersMan.text"));
+        mniSalesStats.setText(resourceBundle.getString("ManagerMain.mniSalesStats.text"));
+        bntReceiptsManagement.setText(resourceBundle.getString("ManagerMain.bntReceiptsManagement.text"));
+        mniReceiptsMan.setText(resourceBundle.getString("ManagerMain.mniReceiptsMan.text"));
+        mniBooksMan.setText(resourceBundle.getString("ManagerMain.mniBooksMan.text"));
+        bntBookManagement.setText(resourceBundle.getString("ManagerMain.bntBookManagement.text"));
+        mnuManagementTools.setText(resourceBundle.getString("ManagerMain.mnuManagementTools.text"));
+        mniExit.setText(resourceBundle.getString("ManagerMain.mniExit.text"));
+        mniSignOut.setText(resourceBundle.getString("ManagerMain.mniSignOut.text"));
+        mniDarkTheme.setText(resourceBundle.getString("ManagerMain.mniDarkTheme.text"));
+        mniLightTheme.setText(resourceBundle.getString("ManagerMain.mniLightTheme.text"));
+        mnuThemes.setText(resourceBundle.getString("ManagerMain.mnuThemes.text"));
+        mnuSystem.setText(resourceBundle.getString("ManagerMain.mnuSystem.text"));
+        mniVietnamese.setText(resourceBundle.getString("ManagerMain.mniVietnamese.text"));
+        mniEnglish.setText(resourceBundle.getString("ManagerMain.mniEnglish.text"));
+        jLabel1.setText(resourceBundle.getString("ManagerMain.jLabel1.text"));
+        mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
+        bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
+        mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
+        
+        
+    }//GEN-LAST:event_mniVietnameseActionPerformed
+
+    private void mniEnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniEnglishActionPerformed
+        // TODO add your handling code here:
+        Locale locale = Locale.getDefault();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
+        bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
+        mniUsersMan.setText(resourceBundle.getString("ManagerMain.mniUsersMan.text"));
+        mniSalesStats.setText(resourceBundle.getString("ManagerMain.mniSalesStats.text"));
+        bntReceiptsManagement.setText(resourceBundle.getString("ManagerMain.bntReceiptsManagement.text"));
+        mniReceiptsMan.setText(resourceBundle.getString("ManagerMain.mniReceiptsMan.text"));
+        mniBooksMan.setText(resourceBundle.getString("ManagerMain.mniBooksMan.text"));
+        bntBookManagement.setText(resourceBundle.getString("ManagerMain.bntBookManagement.text"));
+        mnuManagementTools.setText(resourceBundle.getString("ManagerMain.mnuManagementTools.text"));
+        mniExit.setText(resourceBundle.getString("ManagerMain.mniExit.text"));
+        mniSignOut.setText(resourceBundle.getString("ManagerMain.mniSignOut.text"));
+        mniDarkTheme.setText(resourceBundle.getString("ManagerMain.mniDarkTheme.text"));
+        mniLightTheme.setText(resourceBundle.getString("ManagerMain.mniLightTheme.text"));
+        mnuThemes.setText(resourceBundle.getString("ManagerMain.mnuThemes.text"));
+        mnuSystem.setText(resourceBundle.getString("ManagerMain.mnuSystem.text"));
+        mniVietnamese.setText(resourceBundle.getString("ManagerMain.mniVietnamese.text"));
+        mniEnglish.setText(resourceBundle.getString("ManagerMain.mniEnglish.text"));
+        jLabel1.setText(resourceBundle.getString("ManagerMain.jLabel1.text"));
+        mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
+        bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
+        mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
+        
+    }//GEN-LAST:event_mniEnglishActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -604,16 +698,20 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniAboutUs;
     private javax.swing.JMenuItem mniBooksMan;
     private javax.swing.JRadioButtonMenuItem mniDarkTheme;
+    private javax.swing.JRadioButtonMenuItem mniEnglish;
     private javax.swing.JMenuItem mniExit;
     private javax.swing.JRadioButtonMenuItem mniLightTheme;
     private javax.swing.JMenuItem mniReceiptsMan;
     private javax.swing.JMenuItem mniSalesStats;
     private javax.swing.JMenuItem mniSignOut;
     private javax.swing.JMenuItem mniUsersMan;
+    private javax.swing.JRadioButtonMenuItem mniVietnamese;
     private javax.swing.JMenu mnuHelp;
+    private javax.swing.JMenu mnuLanguages;
     private javax.swing.JMenu mnuManagementTools;
     private javax.swing.JMenu mnuSystem;
     private javax.swing.JMenu mnuThemes;
+    private javax.swing.ButtonGroup radGroupLanguages;
     private javax.swing.ButtonGroup radGroupThemes;
     private javax.swing.JToolBar tblManager;
     private javax.swing.JTabbedPane tplManager;
