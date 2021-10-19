@@ -47,7 +47,7 @@ public class BooksDao {
     }
 
     public List<Books> searchById(String bookId) throws IOException, SQLException {
-        String sql = "select * from tbl_books where book_id like ?";
+        String sql = "select * from tbl_books where lower(book_id) like lower(?)";
         List<Books> books = new ArrayList<>();
         try ( Connection conn = DatabaseUtils.getConnection();  PreparedStatement pstat = conn.prepareStatement(sql)) {
             pstat.setString(1, "%" + bookId + "%");
@@ -69,7 +69,7 @@ public class BooksDao {
     }
 
     public List<Books> searchByTitle(String title) throws IOException, SQLException {
-        String sql = "select * from tbl_books where title like ?";
+        String sql = "select * from tbl_books where lower(title) like lower(?)";
         List<Books> books = new ArrayList<>();
         try ( Connection conn = DatabaseUtils.getConnection();  PreparedStatement pstat = conn.prepareStatement(sql)) {
             pstat.setString(1, "%" + title + "%");
@@ -91,7 +91,7 @@ public class BooksDao {
     }
 
     public List<Books> searchByAuthors(String authors) throws IOException, SQLException {
-        String sql = "select * from tbl_books where authors like ?";
+        String sql = "select * from tbl_books where lower(authors) like lower(?)";
         List<Books> books = new ArrayList<>();
         try ( Connection conn = DatabaseUtils.getConnection();  PreparedStatement pstat = conn.prepareStatement(sql)) {
             pstat.setString(1, "%" + authors + "%");
@@ -113,7 +113,7 @@ public class BooksDao {
     }
 
     public List<Books> searchByPublisher(String publisher) throws IOException, SQLException {
-        String sql = "select * from tbl_books where publisher like ?";
+        String sql = "select * from tbl_books where lower(publisher) like lower(?)";
         List<Books> books = new ArrayList<>();
         try ( Connection conn = DatabaseUtils.getConnection();  PreparedStatement pstat = conn.prepareStatement(sql)) {
             pstat.setString(1, "%" + publisher + "%");

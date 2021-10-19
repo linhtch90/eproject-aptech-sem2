@@ -6,6 +6,7 @@
 package com.softech.bookstoremanagement.gui;
 
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
 import java.io.File;
@@ -14,10 +15,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.FileBasedConfiguration;
+import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -39,6 +52,12 @@ public class ManagerMain extends javax.swing.JFrame {
      * Private tabs for the main tab pane
      */
     private BookManagement tabBooksManagement;
+
+    /*
+    Application theme
+     */
+    private String theme;
+    private String themeConfigFilePath = "theme.properties";
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
@@ -76,6 +95,8 @@ public class ManagerMain extends javax.swing.JFrame {
     public ManagerMain() {
         initComponents();
         writeUserNameToolbar();
+        mniLightTheme.setActionCommand("Light");
+        mniDarkTheme.setActionCommand("Dark");
     }
 
     /**
@@ -88,6 +109,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private void initComponents() {
 
         dilSignOut = new javax.swing.JDialog();
+        radGroupThemes = new javax.swing.ButtonGroup();
         tblManager = new javax.swing.JToolBar();
         bntBookManagement = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -103,6 +125,9 @@ public class ManagerMain extends javax.swing.JFrame {
         tplManager = new javax.swing.JTabbedPane();
         mnbManager = new javax.swing.JMenuBar();
         mnuSystem = new javax.swing.JMenu();
+        mnuThemes = new javax.swing.JMenu();
+        mniLightTheme = new javax.swing.JRadioButtonMenuItem();
+        mniDarkTheme = new javax.swing.JRadioButtonMenuItem();
         mniSignOut = new javax.swing.JMenuItem();
         mniExit = new javax.swing.JMenuItem();
         mnuManagementTools = new javax.swing.JMenu();
@@ -215,6 +240,31 @@ public class ManagerMain extends javax.swing.JFrame {
 
         mnuSystem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-administrative-tools-18.png"))); // NOI18N
         mnuSystem.setText("System");
+
+        mnuThemes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/theme-menu-18.png"))); // NOI18N
+        mnuThemes.setText("Themes");
+
+        radGroupThemes.add(mniLightTheme);
+        mniLightTheme.setText("Light");
+        mniLightTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/light-theme-18.png"))); // NOI18N
+        mniLightTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniLightThemeActionPerformed(evt);
+            }
+        });
+        mnuThemes.add(mniLightTheme);
+
+        radGroupThemes.add(mniDarkTheme);
+        mniDarkTheme.setText("Dark");
+        mniDarkTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/dark-theme-18.png"))); // NOI18N
+        mniDarkTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDarkThemeActionPerformed(evt);
+            }
+        });
+        mnuThemes.add(mniDarkTheme);
+
+        mnuSystem.add(mnuThemes);
 
         mniSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-import-18.png"))); // NOI18N
         mniSignOut.setText("Sign Out");
@@ -385,7 +435,7 @@ public class ManagerMain extends javax.swing.JFrame {
     }//GEN-LAST:event_mniUsersManActionPerformed
 
     private void mniReceiptsManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniReceiptsManActionPerformed
-      if (tabListReceipts == null) {
+        if (tabListReceipts == null) {
             tabListReceipts = new ListReceipts();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bill-18.png"));
             tplManager.addTab("Receipts Management", icon, tabListReceipts);
@@ -443,6 +493,55 @@ public class ManagerMain extends javax.swing.JFrame {
             logOut.setVisible(true);
         }
     }//GEN-LAST:event_mniSignOutActionPerformed
+
+    private void changeTheme() {
+        theme = radGroupThemes.getSelection().getActionCommand();
+
+        try {
+            Parameters params = new Parameters();
+            FileBasedConfigurationBuilder<FileBasedConfiguration> builder
+                    = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
+                            .configure(params.properties()
+                                    .setFileName(themeConfigFilePath)
+                                    .setListDelimiterHandler(new DefaultListDelimiterHandler(',')));
+            Configuration config = builder.getConfiguration();
+            config.setProperty("theme", theme.toString());
+            builder.save();
+
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(ManagerMain.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (theme.equals("Light")) {
+            try {
+                UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+                SwingUtilities.updateComponentTreeUI(this);
+                this.pack();
+            } catch (UnsupportedLookAndFeelException ex) {
+//                Logger.getLogger(ChangeLookAndFeel.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+        } else if (theme.equals("Dark")) {
+            try {
+                UIManager.setLookAndFeel(new FlatNordIJTheme());
+                SwingUtilities.updateComponentTreeUI(this);
+                this.pack();
+            } catch (UnsupportedLookAndFeelException ex) {
+//                Logger.getLogger(ChangeLookAndFeel.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void mniLightThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniLightThemeActionPerformed
+        // TODO add your handling code here:
+        this.changeTheme();
+    }//GEN-LAST:event_mniLightThemeActionPerformed
+
+    private void mniDarkThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDarkThemeActionPerformed
+        // TODO add your handling code here:
+        this.changeTheme();
+    }//GEN-LAST:event_mniDarkThemeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,7 +603,9 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JMenuBar mnbManager;
     private javax.swing.JMenuItem mniAboutUs;
     private javax.swing.JMenuItem mniBooksMan;
+    private javax.swing.JRadioButtonMenuItem mniDarkTheme;
     private javax.swing.JMenuItem mniExit;
+    private javax.swing.JRadioButtonMenuItem mniLightTheme;
     private javax.swing.JMenuItem mniReceiptsMan;
     private javax.swing.JMenuItem mniSalesStats;
     private javax.swing.JMenuItem mniSignOut;
@@ -512,6 +613,8 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JMenu mnuHelp;
     private javax.swing.JMenu mnuManagementTools;
     private javax.swing.JMenu mnuSystem;
+    private javax.swing.JMenu mnuThemes;
+    private javax.swing.ButtonGroup radGroupThemes;
     private javax.swing.JToolBar tblManager;
     private javax.swing.JTabbedPane tplManager;
     // End of variables declaration//GEN-END:variables

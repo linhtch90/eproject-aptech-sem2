@@ -15,12 +15,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import javax.swing.UIManager;
 
 import javax.swing.UIManager;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 /**
  *
@@ -30,6 +35,7 @@ public class MainClass {
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
+    private static String themeConfigFilePath = "theme.properties";
 
     public static Users readUserInfo(String userInfoFilePath) {
 //        System.out.println("This is readUserInfo");
@@ -54,7 +60,7 @@ public class MainClass {
 
     /*
     Check user info before running app
-    */
+     */
     private static void initApp() {
         if (userInfo == null) {
             new SignIn().setVisible(true);
@@ -65,20 +71,40 @@ public class MainClass {
         }
     }
 
+    private static String getThemeConfig() {
+        String storedTheme = "Light";
+        Configurations configs = new Configurations();
+        try {
+            Configuration config = configs.properties(new File(themeConfigFilePath));
+            storedTheme = config.getString("theme");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        return storedTheme;
+    }
+
     private static void runSignIn() {
         new SignIn().setVisible(true);
     }
-    
+
     public static void main(String[] args) {
         userInfo = readUserInfo(userInfoFilePath);
         /*
         Set look and feel
          */
+        String storedTheme = getThemeConfig();
+
         try {
-            UIManager.setLookAndFeel(new FlatNordIJTheme());
+            if (storedTheme.equals("Dark")) {
+                UIManager.setLookAndFeel(new FlatNordIJTheme());
+            } else if (storedTheme.equals("Light")) {
+                UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+            }
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
+
 
         /*
         Show sign in dialog

@@ -49,7 +49,7 @@ public class UsersDao {
     }
     
     public Users searchByUsername(String username) throws IOException, SQLException {
-        String sql = "select * from tbl_users where username = ?";
+        String sql = "select * from tbl_users where lower(username) = lower(?)";
         Users resultUser = new Users();
         
         try (Connection conn = DatabaseUtils.getConnection(); PreparedStatement pstat = conn.prepareStatement(sql)) {
@@ -71,7 +71,7 @@ public class UsersDao {
     }
     
     public Users searchByUserId(String userId) throws IOException, SQLException {
-        String sql = "select * from tbl_users where user_id = ?";
+        String sql = "select * from tbl_users where lower(user_id) = lower(?)";
         Users resultUser = new Users();
         
         try (Connection conn = DatabaseUtils.getConnection(); PreparedStatement pstat = conn.prepareStatement(sql)) {
