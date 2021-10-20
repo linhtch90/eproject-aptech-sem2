@@ -9,6 +9,7 @@ import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -66,6 +67,11 @@ public class ManagerMain extends javax.swing.JFrame {
      */
     private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
     private String languageConfigFilePath = "language.properties";
+
+    /*
+    Manual file path
+     */
+    private String manualFilePath = "help_file/help.pdf";
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
@@ -149,6 +155,7 @@ public class ManagerMain extends javax.swing.JFrame {
         mniSalesStats = new javax.swing.JMenuItem();
         mniUsersMan = new javax.swing.JMenuItem();
         mnuHelp = new javax.swing.JMenu();
+        mniManual = new javax.swing.JMenuItem();
         mniAboutUs = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout dilSignOutLayout = new javax.swing.GroupLayout(dilSignOut.getContentPane());
@@ -379,6 +386,15 @@ public class ManagerMain extends javax.swing.JFrame {
             }
         });
 
+        mniManual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/manual-docs-18.png"))); // NOI18N
+        mniManual.setText(bundle.getString("ManagerMain.mniManual.text")); // NOI18N
+        mniManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniManualActionPerformed(evt);
+            }
+        });
+        mnuHelp.add(mniManual);
+
         mniAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-people-working-together-18.png"))); // NOI18N
         mniAboutUs.setText(bundle.getString("ManagerMain.mniAboutUs.text")); // NOI18N
         mniAboutUs.addActionListener(new java.awt.event.ActionListener() {
@@ -434,7 +450,7 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Quản Lý Sách", icon, tabBooksManagement);
             } else {
                 tplManager.addTab("Books Management", icon, tabBooksManagement);
-            } 
+            }
         }
         tplManager.setSelectedComponent(tabBooksManagement);
     }//GEN-LAST:event_mniBooksManActionPerformed
@@ -463,7 +479,7 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Quản Lý Sách", icon, tabBooksManagement);
             } else {
                 tplManager.addTab("Books Management", icon, tabBooksManagement);
-            }            
+            }
         }
         tplManager.setSelectedComponent(tabBooksManagement);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -488,8 +504,8 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Thống Kê", icon, tabSaleStatistics);
             } else {
                 tplManager.addTab("Sales Statistics", icon, tabSaleStatistics);
-            } 
-            
+            }
+
         }
         tplManager.setSelectedComponent(tabSaleStatistics);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -514,8 +530,8 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Nhân Sự", icon, tabUserManagement);
             } else {
                 tplManager.addTab("Users Management", icon, tabUserManagement);
-            } 
-            
+            }
+
         }
         tplManager.setSelectedComponent(tabUserManagement);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -539,8 +555,8 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Nhân Sự", icon, tabUserManagement);
             } else {
                 tplManager.addTab("Users Management", icon, tabUserManagement);
-            } 
-            
+            }
+
         }
         tplManager.setSelectedComponent(tabUserManagement);
     }//GEN-LAST:event_mniUsersManActionPerformed
@@ -563,7 +579,7 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Hóa Đơn", icon, tabListReceipts);
             } else {
                 tplManager.addTab("Receipts Management", icon, tabListReceipts);
-            } 
+            }
         }
         tplManager.setSelectedComponent(tabListReceipts);
     }//GEN-LAST:event_mniReceiptsManActionPerformed
@@ -587,8 +603,8 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Hóa Đơn", icon, tabListReceipts);
             } else {
                 tplManager.addTab("Receipts Management", icon, tabListReceipts);
-            } 
-            
+            }
+
         }
         tplManager.setSelectedComponent(tabListReceipts);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -612,7 +628,7 @@ public class ManagerMain extends javax.swing.JFrame {
                 tplManager.addTab("Thống Kê", icon, tabSaleStatistics);
             } else {
                 tplManager.addTab("Sales Statistics", icon, tabSaleStatistics);
-            } 
+            }
         }
         tplManager.setSelectedComponent(tabSaleStatistics);
     }//GEN-LAST:event_mniSalesStatsActionPerformed
@@ -738,25 +754,26 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
         bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
         mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
+        mniManual.setText(resourceBundle.getString("ManagerMain.mniManual.text"));
 
         if (tabBooksManagement != null) {
             tabBooksManagement.setLanguage();
             int tabIndex = tplManager.indexOfTab("Books Management");
             tplManager.setTitleAt(tabIndex, "Quản Lý Sách");
         }
-        
+
         if (tabListReceipts != null) {
             tabListReceipts.setLanguage();
             int tabIndex = tplManager.indexOfTab("Receipts Management");
             tplManager.setTitleAt(tabIndex, "Hóa Đơn");
         }
-        
+
         if (tabSaleStatistics != null) {
             tabSaleStatistics.setLanguage();
             int tabIndex = tplManager.indexOfTab("Sales Statistics");
             tplManager.setTitleAt(tabIndex, "Thống Kê");
         }
-        
+
         if (tabUserManagement != null) {
             tabUserManagement.setLanguage();
             int tabIndex = tplManager.indexOfTab("Users Management");
@@ -806,25 +823,26 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
         bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
         mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
-        
+        mniManual.setText(resourceBundle.getString("ManagerMain.mniManual.text"));
+
         if (tabBooksManagement != null) {
             tabBooksManagement.setLanguage();
             int tabIndex = tplManager.indexOfTab("Quản Lý Sách");
             tplManager.setTitleAt(tabIndex, "Books Management");
         }
-        
+
         if (tabListReceipts != null) {
             tabListReceipts.setLanguage();
             int tabIndex = tplManager.indexOfTab("Hóa Đơn");
             tplManager.setTitleAt(tabIndex, "Receipts Management");
         }
-        
+
         if (tabSaleStatistics != null) {
             tabSaleStatistics.setLanguage();
             int tabIndex = tplManager.indexOfTab("Thống Kê");
             tplManager.setTitleAt(tabIndex, "Sales Statistics");
         }
-        
+
         if (tabUserManagement != null) {
             tabUserManagement.setLanguage();
             int tabIndex = tplManager.indexOfTab("Nhân Sự");
@@ -832,12 +850,12 @@ public class ManagerMain extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void setLanguage() {
         Locale locale;
         String language = "";
         Configurations languageConfigs = new Configurations();
-        
+
         try {
             Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
             language = languageConfig.getString("language");
@@ -850,9 +868,9 @@ public class ManagerMain extends javax.swing.JFrame {
         } else {
             locale = Locale.getDefault();
         }
-        
+
         ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
-        
+
         mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
         bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
         mniUsersMan.setText(resourceBundle.getString("ManagerMain.mniUsersMan.text"));
@@ -874,6 +892,8 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
         bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
         mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
+        mniManual.setText(resourceBundle.getString("ManagerMain.mniManual.text"));
+        
     }
 
     private void mniVietnameseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVietnameseActionPerformed
@@ -886,6 +906,17 @@ public class ManagerMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.toEnglish();
     }//GEN-LAST:event_mniEnglishActionPerformed
+
+    private void mniManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniManualActionPerformed
+        try {
+            // TODO add your handling code here:
+            File manualFile = new File(manualFilePath).getAbsoluteFile();
+            Desktop.getDesktop().open(manualFile);
+        } catch (IOException ex) {
+//            Logger.getLogger(ManagerMain.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_mniManualActionPerformed
 
     /**
      * @param args the command line arguments
@@ -951,6 +982,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem mniEnglish;
     private javax.swing.JMenuItem mniExit;
     private javax.swing.JRadioButtonMenuItem mniLightTheme;
+    private javax.swing.JMenuItem mniManual;
     private javax.swing.JMenuItem mniReceiptsMan;
     private javax.swing.JMenuItem mniSalesStats;
     private javax.swing.JMenuItem mniSignOut;

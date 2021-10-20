@@ -9,6 +9,7 @@ import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,6 +57,11 @@ public class CashierMain extends javax.swing.JFrame {
      */
     private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
     private String languageConfigFilePath = "language.properties";
+    
+    /*
+    Manual file path
+     */
+    private String manualFilePath = "help_file/help.pdf";
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
@@ -134,6 +140,7 @@ public class CashierMain extends javax.swing.JFrame {
         mniCreateReceipts = new javax.swing.JMenuItem();
         mniProfileMan = new javax.swing.JMenuItem();
         mnuHelp = new javax.swing.JMenu();
+        mniManual = new javax.swing.JMenuItem();
         mniAboutUs = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout dilSignOutLayout = new javax.swing.GroupLayout(dilSignOut.getContentPane());
@@ -313,6 +320,15 @@ public class CashierMain extends javax.swing.JFrame {
 
         mnuHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-help-18.png"))); // NOI18N
         mnuHelp.setText(bundle.getString("CashierMain.mnuHelp.text")); // NOI18N
+
+        mniManual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/manual-docs-18.png"))); // NOI18N
+        mniManual.setText(bundle.getString("CashierMain.mniManual.text")); // NOI18N
+        mniManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniManualActionPerformed(evt);
+            }
+        });
+        mnuHelp.add(mniManual);
 
         mniAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-people-working-together-18.png"))); // NOI18N
         mniAboutUs.setText(bundle.getString("CashierMain.mniAboutUs.text")); // NOI18N
@@ -546,6 +562,18 @@ public class CashierMain extends javax.swing.JFrame {
         this.toVietnamese();
     }//GEN-LAST:event_mniVietnameseActionPerformed
 
+    private void mniManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniManualActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            File manualFile = new File(manualFilePath).getAbsoluteFile();
+            Desktop.getDesktop().open(manualFile);
+        } catch (IOException ex) {
+//            Logger.getLogger(ManagerMain.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_mniManualActionPerformed
+
     private void toVietnamese() {
         Locale locale = new Locale("vi", "VN");
         ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
@@ -583,6 +611,7 @@ public class CashierMain extends javax.swing.JFrame {
         mniSignOut.setText(resourceBundle.getString("CashierMain.mniSignOut.text"));
         mniDarkTheme.setText(resourceBundle.getString("CashierMain.mniDarkTheme.text"));
         mniLightTheme.setText(resourceBundle.getString("CashierMain.mniLightTheme.text"));
+        mniManual.setText(resourceBundle.getString("CashierMain.mniManual.text"));
         
         if (tabCashierGenerateReceipt != null) {
             tabCashierGenerateReceipt.setLanguage();
@@ -635,6 +664,7 @@ public class CashierMain extends javax.swing.JFrame {
         mniSignOut.setText(resourceBundle.getString("CashierMain.mniSignOut.text"));
         mniDarkTheme.setText(resourceBundle.getString("CashierMain.mniDarkTheme.text"));
         mniLightTheme.setText(resourceBundle.getString("CashierMain.mniLightTheme.text"));
+        mniManual.setText(resourceBundle.getString("CashierMain.mniManual.text"));
         
         if (tabCashierGenerateReceipt != null) {
             tabCashierGenerateReceipt.setLanguage();
@@ -687,7 +717,7 @@ public class CashierMain extends javax.swing.JFrame {
         mniSignOut.setText(resourceBundle.getString("CashierMain.mniSignOut.text"));
         mniDarkTheme.setText(resourceBundle.getString("CashierMain.mniDarkTheme.text"));
         mniLightTheme.setText(resourceBundle.getString("CashierMain.mniLightTheme.text"));
-        
+        mniManual.setText(resourceBundle.getString("CashierMain.mniManual.text"));        
         
     }
     
@@ -752,6 +782,7 @@ public class CashierMain extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem mniEnglish;
     private javax.swing.JMenuItem mniExit;
     private javax.swing.JRadioButtonMenuItem mniLightTheme;
+    private javax.swing.JMenuItem mniManual;
     private javax.swing.JMenuItem mniProfileMan;
     private javax.swing.JMenuItem mniSignOut;
     private javax.swing.JRadioButtonMenuItem mniVietnamese;
