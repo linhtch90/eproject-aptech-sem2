@@ -18,10 +18,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -29,6 +34,12 @@ import org.apache.commons.lang3.StringUtils;
  * @author Linh
  */
 public class SignIn extends javax.swing.JFrame {
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     /**
      * Creates new form SignIn
@@ -37,6 +48,8 @@ public class SignIn extends javax.swing.JFrame {
         initComponents();
         radManager.setActionCommand("manager");
         radCashier.setActionCommand("cashier");
+        
+        this.setLanguage();
     }
 
     /**
@@ -69,7 +82,8 @@ public class SignIn extends javax.swing.JFrame {
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sign In");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        setTitle(bundle.getString("SignIn.title")); // NOI18N
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(234, 231, 214));
@@ -102,7 +116,7 @@ public class SignIn extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(29, 60, 88));
-        jLabel1.setText("Sign In");
+        jLabel1.setText(bundle.getString("SignIn.jLabel1.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -130,20 +144,20 @@ public class SignIn extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(29, 60, 88));
-        jLabel2.setText("Username:");
+        jLabel2.setText(bundle.getString("SignIn.jLabel2.text")); // NOI18N
 
         txtUsername.setMaximumSize(new java.awt.Dimension(7, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(29, 60, 88));
-        jLabel3.setText("Password:");
+        jLabel3.setText(bundle.getString("SignIn.jLabel3.text")); // NOI18N
 
         txtPassword.setMaximumSize(new java.awt.Dimension(7, 20));
 
         radCashier.setBackground(new java.awt.Color(234, 231, 214));
         radGroupSignIn.add(radCashier);
         radCashier.setForeground(new java.awt.Color(29, 60, 88));
-        radCashier.setText("Cashier");
+        radCashier.setText(bundle.getString("SignIn.radCashier.text")); // NOI18N
         radCashier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radCashierActionPerformed(evt);
@@ -153,12 +167,12 @@ public class SignIn extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(234, 231, 214));
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(29, 60, 88));
-        jLabel4.setText("Sign In As");
+        jLabel4.setText(bundle.getString("SignIn.jLabel4.text")); // NOI18N
 
         radManager.setBackground(new java.awt.Color(234, 231, 214));
         radGroupSignIn.add(radManager);
         radManager.setForeground(new java.awt.Color(29, 60, 88));
-        radManager.setText("Manager");
+        radManager.setText(bundle.getString("SignIn.radManager.text")); // NOI18N
         radManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radManagerActionPerformed(evt);
@@ -168,7 +182,7 @@ public class SignIn extends javax.swing.JFrame {
         btnSignIn.setBackground(new java.awt.Color(234, 231, 214));
         btnSignIn.setForeground(new java.awt.Color(29, 60, 88));
         btnSignIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-enter-18.png"))); // NOI18N
-        btnSignIn.setText("Sign In");
+        btnSignIn.setText(bundle.getString("SignIn.btnSignIn.text")); // NOI18N
         btnSignIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSignInActionPerformed(evt);
@@ -178,7 +192,7 @@ public class SignIn extends javax.swing.JFrame {
         btnClose.setBackground(new java.awt.Color(234, 231, 214));
         btnClose.setForeground(new java.awt.Color(29, 60, 88));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-shutdown-18.png"))); // NOI18N
-        btnClose.setText("Close");
+        btnClose.setText(bundle.getString("SignIn.btnClose.text")); // NOI18N
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCloseActionPerformed(evt);
@@ -425,6 +439,34 @@ public class SignIn extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radCashierActionPerformed
 
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+        
+        btnClose.setText(resourceBundle.getString("SignIn.btnClose.text"));
+        btnSignIn.setText(resourceBundle.getString("SignIn.btnSignIn.text"));
+        jLabel1.setText(resourceBundle.getString("SignIn.jLabel1.text"));
+        jLabel4.setText(resourceBundle.getString("SignIn.jLabel4.text"));
+        jLabel3.setText(resourceBundle.getString("SignIn.jLabel3.text"));
+                
+    }
+    
     /**
      * @param args the command line arguments
      */

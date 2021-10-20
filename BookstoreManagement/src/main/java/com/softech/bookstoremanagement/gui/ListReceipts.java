@@ -13,16 +13,22 @@ import com.softech.bookstoremanagement.database.models.ReceiptItems;
 import com.softech.bookstoremanagement.database.models.Receipts;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 /**
  *
@@ -35,6 +41,12 @@ public class ListReceipts extends javax.swing.JPanel {
     private List<Receipts> receipts = new ArrayList<>();
     private DefaultTableModel model;
     private int selectedRow = 0;
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     /**
      * Creates new form ListReceipts
@@ -51,6 +63,8 @@ public class ListReceipts extends javax.swing.JPanel {
         tblListAllReceipts.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
         
         listAllReceipts();
+        
+        this.setLanguage();
 
     }
 
@@ -74,7 +88,8 @@ public class ListReceipts extends javax.swing.JPanel {
 
         btnDetail.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bill-18.png"))); // NOI18N
-        btnDetail.setText("Receipt Detail");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        btnDetail.setText(bundle.getString("ListReceipts.btnDetail.text")); // NOI18N
         btnDetail.setPreferredSize(new java.awt.Dimension(130, 27));
         btnDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +161,7 @@ public class ListReceipts extends javax.swing.JPanel {
 
         btnCancelReceipt.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancelReceipt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-delete-bin-18.png"))); // NOI18N
-        btnCancelReceipt.setText("Cancel Receipt");
+        btnCancelReceipt.setText(bundle.getString("ListReceipts.btnCancelReceipt.text")); // NOI18N
         btnCancelReceipt.setPreferredSize(new java.awt.Dimension(130, 27));
         btnCancelReceipt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +171,7 @@ public class ListReceipts extends javax.swing.JPanel {
 
         btnListAllReceipts.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnListAllReceipts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-to-do-list-18.png"))); // NOI18N
-        btnListAllReceipts.setText("List all receipts");
+        btnListAllReceipts.setText(bundle.getString("ListReceipts.btnListAllReceipts.text")); // NOI18N
         btnListAllReceipts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListAllReceiptsActionPerformed(evt);
@@ -320,6 +335,32 @@ public class ListReceipts extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnDetailActionPerformed
 
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        btnCancelReceipt.setText(resourceBundle.getString("ListReceipts.btnCancelReceipt.text"));
+        btnDetail.setText(resourceBundle.getString("ListReceipts.btnDetail.text"));
+        btnListAllReceipts.setText(resourceBundle.getString("ListReceipts.btnListAllReceipts.text"));        
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelReceipt;

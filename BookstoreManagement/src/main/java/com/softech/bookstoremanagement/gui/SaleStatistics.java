@@ -21,12 +21,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 /**
  *
@@ -42,6 +47,12 @@ public class SaleStatistics extends javax.swing.JPanel {
     private String[] bookIds;
     float totalRevenue;
     int bookIndex;
+    
+     /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     public SaleStatistics() {
         bookIndex = 0;
@@ -51,6 +62,8 @@ public class SaleStatistics extends javax.swing.JPanel {
         showChartFromFile();
         getTopFiveBooks();
         showBook(bookIndex);
+        
+        this.setLanguage();
     }
 
     /**
@@ -84,7 +97,8 @@ public class SaleStatistics extends javax.swing.JPanel {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setPreferredSize(new java.awt.Dimension(1000, 520));
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Revenue of the last 7 days "));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("SaleStatistics.jPanel3.border.title"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,7 +116,7 @@ public class SaleStatistics extends javax.swing.JPanel {
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Total Revenue 7 days:");
+        jLabel1.setText(bundle.getString("SaleStatistics.jLabel1.text")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -134,7 +148,7 @@ public class SaleStatistics extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Best Sellers"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("SaleStatistics.jPanel4.border.title"))); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setPreferredSize(new java.awt.Dimension(300, 300));
@@ -151,28 +165,28 @@ public class SaleStatistics extends javax.swing.JPanel {
         );
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTitle.setText("Title:");
+        lblTitle.setText(bundle.getString("SaleStatistics.lblTitle.text")); // NOI18N
 
         lblAuthor.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblAuthor.setText("Author:");
+        lblAuthor.setText(bundle.getString("SaleStatistics.lblAuthor.text")); // NOI18N
 
         lblPrice.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblPrice.setText("Price: $");
+        lblPrice.setText(bundle.getString("SaleStatistics.lblPrice.text")); // NOI18N
 
         lblSoldCopies.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblSoldCopies.setText("Sold:");
+        lblSoldCopies.setText(bundle.getString("SaleStatistics.lblSoldCopies.text")); // NOI18N
 
         lblCurrentBook.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblCurrentBook.setText("1");
+        lblCurrentBook.setText(bundle.getString("SaleStatistics.lblCurrentBook.text")); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("of");
+        jLabel4.setText(bundle.getString("SaleStatistics.jLabel4.text")); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("5");
+        jLabel5.setText(bundle.getString("SaleStatistics.jLabel5.text")); // NOI18N
 
         lblPublisher.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblPublisher.setText("Publisher:");
+        lblPublisher.setText(bundle.getString("SaleStatistics.lblPublisher.text")); // NOI18N
 
         lblPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/prev_icon_20.png"))); // NOI18N
         lblPrev.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -443,6 +457,36 @@ public class SaleStatistics extends javax.swing.JPanel {
             ex.printStackTrace();
         }
 
+    }
+    
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        lblTitle.setText(resourceBundle.getString("SaleStatistics.lblTitle.text"));
+        lblPublisher.setText(resourceBundle.getString("SaleStatistics.lblPublisher.text"));
+        jLabel1.setText(resourceBundle.getString("SaleStatistics.jLabel1.text"));
+        lblSoldCopies.setText(resourceBundle.getString("SaleStatistics.lblSoldCopies.text"));
+        lblPrice.setText(resourceBundle.getString("SaleStatistics.lblPrice.text"));
+        lblAuthor.setText(resourceBundle.getString("SaleStatistics.lblAuthor.text"));
+              
+        
     }
 
 //    public static void main(String[] args) {

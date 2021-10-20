@@ -8,17 +8,23 @@ package com.softech.bookstoremanagement.gui;
 import com.softech.bookstoremanagement.database.dao.UsersDao;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -29,6 +35,12 @@ public class UserManagement extends javax.swing.JPanel {
 
     private List<Users> users = new ArrayList<>();
     private DefaultTableModel model;
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     /**
      * Creates new form UserManagement
@@ -36,6 +48,7 @@ public class UserManagement extends javax.swing.JPanel {
     public UserManagement() {
         initComponents();
         reloadAll();
+        this.setLanguage();
     }
 
     /**
@@ -80,22 +93,23 @@ public class UserManagement extends javax.swing.JPanel {
         jPanel3.setPreferredSize(new java.awt.Dimension(1000, 553));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("ID");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("UserManagement.jLabel1.text")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Username");
+        jLabel2.setText(bundle.getString("UserManagement.jLabel2.text")); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Password");
+        jLabel3.setText(bundle.getString("UserManagement.jLabel3.text")); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("First Name");
+        jLabel5.setText(bundle.getString("UserManagement.jLabel5.text")); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel6.setText("Last Name");
+        jLabel6.setText(bundle.getString("UserManagement.jLabel6.text")); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("Email");
+        jLabel7.setText(bundle.getString("UserManagement.jLabel7.text")); // NOI18N
 
         txtID.setPreferredSize(new java.awt.Dimension(400, 20));
 
@@ -155,7 +169,7 @@ public class UserManagement extends javax.swing.JPanel {
 
         bntAdd.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bntAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-plus-+-18.png"))); // NOI18N
-        bntAdd.setText("Add");
+        bntAdd.setText(bundle.getString("UserManagement.bntAdd.text")); // NOI18N
         bntAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntAddActionPerformed(evt);
@@ -164,7 +178,7 @@ public class UserManagement extends javax.swing.JPanel {
 
         bntReform.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bntReform.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-brush-18.png"))); // NOI18N
-        bntReform.setText("Clean");
+        bntReform.setText(bundle.getString("UserManagement.bntReform.text")); // NOI18N
         bntReform.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntReformActionPerformed(evt);
@@ -173,7 +187,7 @@ public class UserManagement extends javax.swing.JPanel {
 
         bntDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bntDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-delete-bin-18.png"))); // NOI18N
-        bntDelete.setText("Delete");
+        bntDelete.setText(bundle.getString("UserManagement.bntDelete.text")); // NOI18N
         bntDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntDeleteActionPerformed(evt);
@@ -182,7 +196,7 @@ public class UserManagement extends javax.swing.JPanel {
 
         bntUpdate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bntUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-map-editing-18.png"))); // NOI18N
-        bntUpdate.setText("Update");
+        bntUpdate.setText(bundle.getString("UserManagement.bntUpdate.text")); // NOI18N
         bntUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntUpdateActionPerformed(evt);
@@ -191,7 +205,7 @@ public class UserManagement extends javax.swing.JPanel {
 
         btnListAllUsers.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnListAllUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-to-do-list-18.png"))); // NOI18N
-        btnListAllUsers.setText("List All Users");
+        btnListAllUsers.setText(bundle.getString("UserManagement.btnListAllUsers.text")); // NOI18N
         btnListAllUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListAllUsersActionPerformed(evt);
@@ -199,7 +213,7 @@ public class UserManagement extends javax.swing.JPanel {
         });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel10.setText("Phone");
+        jLabel10.setText(bundle.getString("UserManagement.jLabel10.text")); // NOI18N
 
         txtPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +222,7 @@ public class UserManagement extends javax.swing.JPanel {
         });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel11.setText("Retype Password");
+        jLabel11.setText(bundle.getString("UserManagement.jLabel11.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -661,6 +675,42 @@ public class UserManagement extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tblUsersMouseClicked
 
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        bntAdd.setText(resourceBundle.getString("UserManagement.bntAdd.text"));
+        jLabel7.setText(resourceBundle.getString("UserManagement.jLabel7.text"));
+        jLabel6.setText(resourceBundle.getString("UserManagement.jLabel6.text"));
+        jLabel5.setText(resourceBundle.getString("UserManagement.jLabel5.text"));
+        jLabel3.setText(resourceBundle.getString("UserManagement.jLabel3.text"));
+        jLabel2.setText(resourceBundle.getString("UserManagement.jLabel2.text"));
+        jLabel1.setText(resourceBundle.getString("UserManagement.jLabel1.text"));
+        jLabel11.setText(resourceBundle.getString("UserManagement.jLabel11.text"));
+        jLabel10.setText(resourceBundle.getString("UserManagement.jLabel10.text"));
+        btnListAllUsers.setText(resourceBundle.getString("UserManagement.btnListAllUsers.text"));
+        bntUpdate.setText(resourceBundle.getString("UserManagement.bntUpdate.text"));
+        bntDelete.setText(resourceBundle.getString("UserManagement.bntDelete.text"));
+                
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntAdd;

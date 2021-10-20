@@ -16,6 +16,7 @@ import com.softech.bookstoremanagement.database.models.Users;
 import com.softech.bookstoremanagement.database.utils.DatabaseUtils;
 import java.awt.Cursor;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -23,6 +24,8 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -34,6 +37,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -53,6 +59,12 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
     private int selectedRow = 0;
 
     private String receiptId;
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
 //    private String[] columnTitles = new String[]{" BookId ", " Title", "Author", " Publisher ", " Price"};
 //
@@ -93,6 +105,8 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
         tblReceiptInfo.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
         
         listAllBooks();
+        
+        this.setLanguage();
 
     }
 
@@ -139,18 +153,19 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1000, 590));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Generate Receipt"));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CashierGenerateReceipt.jPanel1.border.title"))); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 590));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Book ID");
+        jLabel1.setText(bundle.getString("CashierGenerateReceipt.jLabel1.text")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Quantity");
+        jLabel2.setText(bundle.getString("CashierGenerateReceipt.jLabel2.text")); // NOI18N
 
         btnAddToReceipt.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAddToReceipt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-plus-+-18.png"))); // NOI18N
-        btnAddToReceipt.setText("Add");
+        btnAddToReceipt.setText(bundle.getString("CashierGenerateReceipt.btnAddToReceipt.text")); // NOI18N
         btnAddToReceipt.setPreferredSize(new java.awt.Dimension(80, 21));
         btnAddToReceipt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,7 +175,7 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         btnUpdateReceiptItem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnUpdateReceiptItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-map-editing-18.png"))); // NOI18N
-        btnUpdateReceiptItem.setText("Update");
+        btnUpdateReceiptItem.setText(bundle.getString("CashierGenerateReceipt.btnUpdateReceiptItem.text")); // NOI18N
         btnUpdateReceiptItem.setPreferredSize(new java.awt.Dimension(80, 21));
         btnUpdateReceiptItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,7 +185,7 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         btnDeleteReceiptItem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDeleteReceiptItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-delete-bin-18.png"))); // NOI18N
-        btnDeleteReceiptItem.setText("Delete");
+        btnDeleteReceiptItem.setText(bundle.getString("CashierGenerateReceipt.btnDeleteReceiptItem.text")); // NOI18N
         btnDeleteReceiptItem.setPreferredSize(new java.awt.Dimension(80, 21));
         btnDeleteReceiptItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +194,7 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Receipt Information");
+        jLabel3.setText(bundle.getString("CashierGenerateReceipt.jLabel3.text")); // NOI18N
 
         tblReceiptInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -225,7 +240,7 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         btnClean.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnClean.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-brush-18.png"))); // NOI18N
-        btnClean.setText("Clean");
+        btnClean.setText(bundle.getString("CashierGenerateReceipt.btnClean.text")); // NOI18N
         btnClean.setPreferredSize(new java.awt.Dimension(80, 23));
         btnClean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,7 +253,7 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         btnExportReceipt.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnExportReceipt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-export-pdf-18.png"))); // NOI18N
-        btnExportReceipt.setText("Export Receipt");
+        btnExportReceipt.setText(bundle.getString("CashierGenerateReceipt.btnExportReceipt.text")); // NOI18N
         btnExportReceipt.setPreferredSize(new java.awt.Dimension(120, 21));
         btnExportReceipt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,14 +328,14 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         add(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Books"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CashierGenerateReceipt.jPanel2.border.title"))); // NOI18N
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
 
         jPanel3.setPreferredSize(new java.awt.Dimension(488, 130));
 
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-search-18 (2).png"))); // NOI18N
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("CashierGenerateReceipt.btnSearch.text")); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -328,11 +343,11 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Search by:");
+        jLabel4.setText(bundle.getString("CashierGenerateReceipt.jLabel4.text")); // NOI18N
 
         radGroupSearch.add(radSearchBookId);
         radSearchBookId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchBookId.setText("Book ID");
+        radSearchBookId.setText(bundle.getString("CashierGenerateReceipt.radSearchBookId.text")); // NOI18N
         radSearchBookId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radSearchBookIdActionPerformed(evt);
@@ -341,7 +356,7 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         radGroupSearch.add(radSearchTitle);
         radSearchTitle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchTitle.setText("Title");
+        radSearchTitle.setText(bundle.getString("CashierGenerateReceipt.radSearchTitle.text")); // NOI18N
         radSearchTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radSearchTitleActionPerformed(evt);
@@ -350,15 +365,15 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
 
         radGroupSearch.add(radSearchAuthor);
         radSearchAuthor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchAuthor.setText("Author");
+        radSearchAuthor.setText(bundle.getString("CashierGenerateReceipt.radSearchAuthor.text")); // NOI18N
 
         radGroupSearch.add(radSearchPublisher);
         radSearchPublisher.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchPublisher.setText("Publisher");
+        radSearchPublisher.setText(bundle.getString("CashierGenerateReceipt.radSearchPublisher.text")); // NOI18N
 
         btnListAllBooks.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnListAllBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-to-do-list-18.png"))); // NOI18N
-        btnListAllBooks.setText("List all books");
+        btnListAllBooks.setText(bundle.getString("CashierGenerateReceipt.btnListAllBooks.text")); // NOI18N
         btnListAllBooks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListAllBooksActionPerformed(evt);
@@ -978,6 +993,44 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_radSearchTitleActionPerformed
 
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+        
+        btnDeleteReceiptItem.setText(resourceBundle.getString("CashierGenerateReceipt.btnDeleteReceiptItem.text"));
+        btnUpdateReceiptItem.setText(resourceBundle.getString("CashierGenerateReceipt.btnUpdateReceiptItem.text"));
+        btnAddToReceipt.setText(resourceBundle.getString("CashierGenerateReceipt.btnAddToReceipt.text"));
+        jLabel2.setText(resourceBundle.getString("CashierGenerateReceipt.jLabel2.text"));
+        jLabel1.setText(resourceBundle.getString("CashierGenerateReceipt.jLabel1.text"));
+        btnListAllBooks.setText(resourceBundle.getString("CashierGenerateReceipt.btnListAllBooks.text"));
+        radSearchPublisher.setText(resourceBundle.getString("CashierGenerateReceipt.radSearchPublisher.text"));
+        radSearchAuthor.setText(resourceBundle.getString("CashierGenerateReceipt.radSearchAuthor.text"));
+        radSearchTitle.setText(resourceBundle.getString("CashierGenerateReceipt.radSearchTitle.text"));
+        radSearchBookId.setText(resourceBundle.getString("CashierGenerateReceipt.radSearchBookId.text"));
+        jLabel4.setText(resourceBundle.getString("CashierGenerateReceipt.jLabel4.text"));
+        btnSearch.setText(resourceBundle.getString("CashierGenerateReceipt.btnSearch.text"));
+        btnExportReceipt.setText(resourceBundle.getString("CashierGenerateReceipt.btnExportReceipt.text"));
+        btnClean.setText(resourceBundle.getString("CashierGenerateReceipt.btnClean.text"));
+        jLabel3.setText(resourceBundle.getString("CashierGenerateReceipt.jLabel3.text"));
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddToReceipt;

@@ -14,14 +14,20 @@ import com.softech.bookstoremanagement.database.models.ReceiptItems;
 import com.softech.bookstoremanagement.database.models.Receipts;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 /**
  *
@@ -30,6 +36,12 @@ import javax.swing.table.DefaultTableModel;
 public class DetailReceipt extends javax.swing.JFrame {
 
     private String receiptId;
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     /**
      * Creates new form DetailReceipt
@@ -44,6 +56,7 @@ public class DetailReceipt extends javax.swing.JFrame {
         initComponents();
         this.receiptId = receiptId;
         setModelDetailReceipt();
+        this.setLanguage();
 
     }
 
@@ -130,40 +143,41 @@ public class DetailReceipt extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Information Receipt");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("DetailReceipt.jLabel1.text")); // NOI18N
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Cashier:");
+        jLabel2.setText(bundle.getString("DetailReceipt.jLabel2.text")); // NOI18N
         jLabel2.setMaximumSize(new java.awt.Dimension(55, 15));
         jLabel2.setMinimumSize(new java.awt.Dimension(55, 15));
         jLabel2.setPreferredSize(new java.awt.Dimension(55, 15));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Date:");
+        jLabel3.setText(bundle.getString("DetailReceipt.jLabel3.text")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(55, 15));
         jLabel3.setMinimumSize(new java.awt.Dimension(55, 15));
         jLabel3.setPreferredSize(new java.awt.Dimension(55, 15));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Recipt Id:");
+        jLabel4.setText(bundle.getString("DetailReceipt.jLabel4.text")); // NOI18N
         jLabel4.setMaximumSize(new java.awt.Dimension(55, 15));
         jLabel4.setMinimumSize(new java.awt.Dimension(55, 15));
         jLabel4.setPreferredSize(new java.awt.Dimension(55, 15));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Status:");
+        jLabel5.setText(bundle.getString("DetailReceipt.jLabel5.text")); // NOI18N
         jLabel5.setMaximumSize(new java.awt.Dimension(55, 15));
         jLabel5.setMinimumSize(new java.awt.Dimension(55, 15));
         jLabel5.setPreferredSize(new java.awt.Dimension(55, 15));
 
-        lblID.setText(" ");
+        lblID.setText(bundle.getString("DetailReceipt.lblID.text")); // NOI18N
 
-        lblCashier.setText(" ");
+        lblCashier.setText(bundle.getString("DetailReceipt.lblCashier.text")); // NOI18N
 
-        lblDate.setText(" ");
+        lblDate.setText(bundle.getString("DetailReceipt.lblDate.text")); // NOI18N
 
-        lblStatus.setText(" ");
+        lblStatus.setText(bundle.getString("DetailReceipt.lblStatus.text")); // NOI18N
 
         jSeparator1.setAlignmentX(1.0F);
         jSeparator1.setAlignmentY(1.0F);
@@ -287,11 +301,11 @@ public class DetailReceipt extends javax.swing.JFrame {
         }
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Total : ");
+        jLabel7.setText(bundle.getString("DetailReceipt.jLabel7.text")); // NOI18N
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTotal.setText("  ");
+        lblTotal.setText(bundle.getString("DetailReceipt.lblTotal.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -378,6 +392,35 @@ public class DetailReceipt extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+        
+        jLabel2.setText(resourceBundle.getString("DetailReceipt.jLabel2.text"));
+        jLabel1.setText(resourceBundle.getString("BookManagement.jLabel1.text"));
+        jLabel5.setText(resourceBundle.getString("BookManagement.jLabel5.text"));
+        jLabel4.setText(resourceBundle.getString("BookManagement.jLabel4.text"));
+        jLabel7.setText(resourceBundle.getString("BookManagement.jLabel7.text"));
+        jLabel3.setText(resourceBundle.getString("BookManagement.jLabel3.text"));
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

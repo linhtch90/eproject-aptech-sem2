@@ -60,8 +60,12 @@ public class ManagerMain extends javax.swing.JFrame {
      */
     private String theme;
     private String themeConfigFilePath = "theme.properties";
-    
+
+    /*
+    Application language settings
+     */
     private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
@@ -101,6 +105,7 @@ public class ManagerMain extends javax.swing.JFrame {
         writeUserNameToolbar();
         mniLightTheme.setActionCommand("Light");
         mniDarkTheme.setActionCommand("Dark");
+        this.setLanguage();
     }
 
     /**
@@ -279,7 +284,6 @@ public class ManagerMain extends javax.swing.JFrame {
         mnuLanguages.setText(bundle.getString("ManagerMain.mnuLanguages.text")); // NOI18N
 
         radGroupLanguages.add(mniEnglish);
-        mniEnglish.setSelected(true);
         mniEnglish.setText(bundle.getString("ManagerMain.mniEnglish.text")); // NOI18N
         mniEnglish.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/uk-flag-18.png"))); // NOI18N
         mniEnglish.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +420,21 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabBooksManagement == null) {
             tabBooksManagement = new BookManagement();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bookcase-18.png"));
-            tplManager.addTab("Books Management", icon, tabBooksManagement);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Quản Lý Sách", icon, tabBooksManagement);
+            } else {
+                tplManager.addTab("Books Management", icon, tabBooksManagement);
+            } 
         }
         tplManager.setSelectedComponent(tabBooksManagement);
     }//GEN-LAST:event_mniBooksManActionPerformed
@@ -431,7 +449,21 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabBooksManagement == null) {
             tabBooksManagement = new BookManagement();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bookcase-18.png"));
-            tplManager.addTab("Books Management", icon, tabBooksManagement);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Quản Lý Sách", icon, tabBooksManagement);
+            } else {
+                tplManager.addTab("Books Management", icon, tabBooksManagement);
+            }            
         }
         tplManager.setSelectedComponent(tabBooksManagement);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -442,7 +474,22 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabSaleStatistics == null) {
             tabSaleStatistics = new SaleStatistics();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-statistics-18.png"));
-            tplManager.addTab("Sales Statistics", icon, tabSaleStatistics);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Thống Kê", icon, tabSaleStatistics);
+            } else {
+                tplManager.addTab("Sales Statistics", icon, tabSaleStatistics);
+            } 
+            
         }
         tplManager.setSelectedComponent(tabSaleStatistics);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -453,8 +500,22 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabUserManagement == null) {
             tabUserManagement = new UserManagement();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-name-18.png"));
-            tplManager.addTab("User Management", icon, tabUserManagement);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
 
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Nhân Sự", icon, tabUserManagement);
+            } else {
+                tplManager.addTab("Users Management", icon, tabUserManagement);
+            } 
+            
         }
         tplManager.setSelectedComponent(tabUserManagement);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -464,7 +525,22 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabUserManagement == null) {
             tabUserManagement = new UserManagement();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-name-18.png"));
-            tplManager.addTab("User Management", icon, tabUserManagement);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Nhân Sự", icon, tabUserManagement);
+            } else {
+                tplManager.addTab("Users Management", icon, tabUserManagement);
+            } 
+            
         }
         tplManager.setSelectedComponent(tabUserManagement);
     }//GEN-LAST:event_mniUsersManActionPerformed
@@ -473,7 +549,21 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabListReceipts == null) {
             tabListReceipts = new ListReceipts();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bill-18.png"));
-            tplManager.addTab("Receipts Management", icon, tabListReceipts);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Hóa Đơn", icon, tabListReceipts);
+            } else {
+                tplManager.addTab("Receipts Management", icon, tabListReceipts);
+            } 
         }
         tplManager.setSelectedComponent(tabListReceipts);
     }//GEN-LAST:event_mniReceiptsManActionPerformed
@@ -483,7 +573,22 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabListReceipts == null) {
             tabListReceipts = new ListReceipts();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-bill-18.png"));
-            tplManager.addTab("Receipts Management", icon, tabListReceipts);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Hóa Đơn", icon, tabListReceipts);
+            } else {
+                tplManager.addTab("Receipts Management", icon, tabListReceipts);
+            } 
+            
         }
         tplManager.setSelectedComponent(tabListReceipts);
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -493,7 +598,21 @@ public class ManagerMain extends javax.swing.JFrame {
         if (tabSaleStatistics == null) {
             tabSaleStatistics = new SaleStatistics();
             ImageIcon icon = new ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-statistics-18.png"));
-            tplManager.addTab("Sale Statistics", icon, tabSaleStatistics);
+            String language = "";
+            Configurations languageConfigs = new Configurations();
+
+            try {
+                Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+                language = languageConfig.getString("language");
+            } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+            if (language.equals("vi")) {
+                tplManager.addTab("Thống Kê", icon, tabSaleStatistics);
+            } else {
+                tplManager.addTab("Sales Statistics", icon, tabSaleStatistics);
+            } 
         }
         tplManager.setSelectedComponent(tabSaleStatistics);
     }//GEN-LAST:event_mniSalesStatsActionPerformed
@@ -578,10 +697,93 @@ public class ManagerMain extends javax.swing.JFrame {
         this.changeTheme();
     }//GEN-LAST:event_mniDarkThemeActionPerformed
 
-    private void mniVietnameseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVietnameseActionPerformed
-        // TODO add your handling code here:
+    private void toVietnamese() {
         Locale locale = new Locale("vi", "VN");
         ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        try {
+            Parameters params = new Parameters();
+            FileBasedConfigurationBuilder<FileBasedConfiguration> builder
+                    = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
+                            .configure(params.properties()
+                                    .setFileName(languageConfigFilePath)
+                                    .setListDelimiterHandler(new DefaultListDelimiterHandler(',')));
+            Configuration config = builder.getConfiguration();
+            config.setProperty("language", "vi");
+            builder.save();
+
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(ManagerMain.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+
+        mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
+        bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
+        mniUsersMan.setText(resourceBundle.getString("ManagerMain.mniUsersMan.text"));
+        mniSalesStats.setText(resourceBundle.getString("ManagerMain.mniSalesStats.text"));
+        bntReceiptsManagement.setText(resourceBundle.getString("ManagerMain.bntReceiptsManagement.text"));
+        mniReceiptsMan.setText(resourceBundle.getString("ManagerMain.mniReceiptsMan.text"));
+        mniBooksMan.setText(resourceBundle.getString("ManagerMain.mniBooksMan.text"));
+        bntBookManagement.setText(resourceBundle.getString("ManagerMain.bntBookManagement.text"));
+        mnuManagementTools.setText(resourceBundle.getString("ManagerMain.mnuManagementTools.text"));
+        mniExit.setText(resourceBundle.getString("ManagerMain.mniExit.text"));
+        mniSignOut.setText(resourceBundle.getString("ManagerMain.mniSignOut.text"));
+        mniDarkTheme.setText(resourceBundle.getString("ManagerMain.mniDarkTheme.text"));
+        mniLightTheme.setText(resourceBundle.getString("ManagerMain.mniLightTheme.text"));
+        mnuThemes.setText(resourceBundle.getString("ManagerMain.mnuThemes.text"));
+        mnuSystem.setText(resourceBundle.getString("ManagerMain.mnuSystem.text"));
+        mniVietnamese.setText(resourceBundle.getString("ManagerMain.mniVietnamese.text"));
+        mniEnglish.setText(resourceBundle.getString("ManagerMain.mniEnglish.text"));
+        jLabel1.setText(resourceBundle.getString("ManagerMain.jLabel1.text"));
+        mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
+        bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
+        mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
+
+        if (tabBooksManagement != null) {
+            tabBooksManagement.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Books Management");
+            tplManager.setTitleAt(tabIndex, "Quản Lý Sách");
+        }
+        
+        if (tabListReceipts != null) {
+            tabListReceipts.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Receipts Management");
+            tplManager.setTitleAt(tabIndex, "Hóa Đơn");
+        }
+        
+        if (tabSaleStatistics != null) {
+            tabSaleStatistics.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Sales Statistics");
+            tplManager.setTitleAt(tabIndex, "Thống Kê");
+        }
+        
+        if (tabUserManagement != null) {
+            tabUserManagement.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Users Management");
+            tplManager.setTitleAt(tabIndex, "Nhân Sự");
+        }
+
+    }
+
+    private void toEnglish() {
+        Locale locale = Locale.getDefault();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        try {
+            Parameters params = new Parameters();
+            FileBasedConfigurationBuilder<FileBasedConfiguration> builder
+                    = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
+                            .configure(params.properties()
+                                    .setFileName(languageConfigFilePath)
+                                    .setListDelimiterHandler(new DefaultListDelimiterHandler(',')));
+            Configuration config = builder.getConfiguration();
+            config.setProperty("language", "en");
+            builder.save();
+
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(ManagerMain.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
 
         mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
         bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
@@ -605,36 +807,84 @@ public class ManagerMain extends javax.swing.JFrame {
         bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
         mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
         
+        if (tabBooksManagement != null) {
+            tabBooksManagement.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Quản Lý Sách");
+            tplManager.setTitleAt(tabIndex, "Books Management");
+        }
         
+        if (tabListReceipts != null) {
+            tabListReceipts.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Hóa Đơn");
+            tplManager.setTitleAt(tabIndex, "Receipts Management");
+        }
+        
+        if (tabSaleStatistics != null) {
+            tabSaleStatistics.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Thống Kê");
+            tplManager.setTitleAt(tabIndex, "Sales Statistics");
+        }
+        
+        if (tabUserManagement != null) {
+            tabUserManagement.setLanguage();
+            int tabIndex = tplManager.indexOfTab("Nhân Sự");
+            tplManager.setTitleAt(tabIndex, "Users Management");
+        }
+
+    }
+    
+    private void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+        
+        mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
+        bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
+        mniUsersMan.setText(resourceBundle.getString("ManagerMain.mniUsersMan.text"));
+        mniSalesStats.setText(resourceBundle.getString("ManagerMain.mniSalesStats.text"));
+        bntReceiptsManagement.setText(resourceBundle.getString("ManagerMain.bntReceiptsManagement.text"));
+        mniReceiptsMan.setText(resourceBundle.getString("ManagerMain.mniReceiptsMan.text"));
+        mniBooksMan.setText(resourceBundle.getString("ManagerMain.mniBooksMan.text"));
+        bntBookManagement.setText(resourceBundle.getString("ManagerMain.bntBookManagement.text"));
+        mnuManagementTools.setText(resourceBundle.getString("ManagerMain.mnuManagementTools.text"));
+        mniExit.setText(resourceBundle.getString("ManagerMain.mniExit.text"));
+        mniSignOut.setText(resourceBundle.getString("ManagerMain.mniSignOut.text"));
+        mniDarkTheme.setText(resourceBundle.getString("ManagerMain.mniDarkTheme.text"));
+        mniLightTheme.setText(resourceBundle.getString("ManagerMain.mniLightTheme.text"));
+        mnuThemes.setText(resourceBundle.getString("ManagerMain.mnuThemes.text"));
+        mnuSystem.setText(resourceBundle.getString("ManagerMain.mnuSystem.text"));
+        mniVietnamese.setText(resourceBundle.getString("ManagerMain.mniVietnamese.text"));
+        mniEnglish.setText(resourceBundle.getString("ManagerMain.mniEnglish.text"));
+        jLabel1.setText(resourceBundle.getString("ManagerMain.jLabel1.text"));
+        mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
+        bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
+        mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
+    }
+
+    private void mniVietnameseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVietnameseActionPerformed
+        // TODO add your handling code here:
+        this.toVietnamese();
+
     }//GEN-LAST:event_mniVietnameseActionPerformed
 
     private void mniEnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniEnglishActionPerformed
         // TODO add your handling code here:
-        Locale locale = Locale.getDefault();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
-
-        mnuHelp.setText(resourceBundle.getString("ManagerMain.mnuHelp.text"));
-        bntSalesStatstics.setText(resourceBundle.getString("ManagerMain.bntSalesStatstics.text"));
-        mniUsersMan.setText(resourceBundle.getString("ManagerMain.mniUsersMan.text"));
-        mniSalesStats.setText(resourceBundle.getString("ManagerMain.mniSalesStats.text"));
-        bntReceiptsManagement.setText(resourceBundle.getString("ManagerMain.bntReceiptsManagement.text"));
-        mniReceiptsMan.setText(resourceBundle.getString("ManagerMain.mniReceiptsMan.text"));
-        mniBooksMan.setText(resourceBundle.getString("ManagerMain.mniBooksMan.text"));
-        bntBookManagement.setText(resourceBundle.getString("ManagerMain.bntBookManagement.text"));
-        mnuManagementTools.setText(resourceBundle.getString("ManagerMain.mnuManagementTools.text"));
-        mniExit.setText(resourceBundle.getString("ManagerMain.mniExit.text"));
-        mniSignOut.setText(resourceBundle.getString("ManagerMain.mniSignOut.text"));
-        mniDarkTheme.setText(resourceBundle.getString("ManagerMain.mniDarkTheme.text"));
-        mniLightTheme.setText(resourceBundle.getString("ManagerMain.mniLightTheme.text"));
-        mnuThemes.setText(resourceBundle.getString("ManagerMain.mnuThemes.text"));
-        mnuSystem.setText(resourceBundle.getString("ManagerMain.mnuSystem.text"));
-        mniVietnamese.setText(resourceBundle.getString("ManagerMain.mniVietnamese.text"));
-        mniEnglish.setText(resourceBundle.getString("ManagerMain.mniEnglish.text"));
-        jLabel1.setText(resourceBundle.getString("ManagerMain.jLabel1.text"));
-        mnuLanguages.setText(resourceBundle.getString("ManagerMain.mnuLanguages.text"));
-        bntUserManagement.setText(resourceBundle.getString("ManagerMain.bntUserManagement.text"));
-        mniAboutUs.setText(resourceBundle.getString("ManagerMain.mniAboutUs.text"));
-        
+        this.toEnglish();
     }//GEN-LAST:event_mniEnglishActionPerformed
 
     /**

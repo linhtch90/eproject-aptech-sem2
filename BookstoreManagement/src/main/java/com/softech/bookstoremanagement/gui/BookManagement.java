@@ -24,6 +24,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -37,6 +39,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -48,6 +53,12 @@ public class BookManagement extends javax.swing.JPanel {
     private File f;
 
     private List<Books> books = new ArrayList<>();
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
 //    private DefaultTableModel model;
 //
@@ -83,6 +94,8 @@ public class BookManagement extends javax.swing.JPanel {
         tblBookTable.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
         
         listAllBooks();
+        
+        this.setLanguage();
 
 //        table();
     }
@@ -137,14 +150,15 @@ public class BookManagement extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1000, 520));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Books Data"));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("BookManagement.jPanel1.border.title"))); // NOI18N
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
         jPanel6.setPreferredSize(new java.awt.Dimension(583, 70));
 
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-search-18 (2).png"))); // NOI18N
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("BookManagement.btnSearch.text")); // NOI18N
         btnSearch.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnSearch.setPreferredSize(new java.awt.Dimension(60, 25));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -154,15 +168,15 @@ public class BookManagement extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Search by:");
+        jLabel1.setText(bundle.getString("BookManagement.jLabel1.text")); // NOI18N
 
         radGroupSearch.add(radSearchBookId);
         radSearchBookId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchBookId.setText("Book ID");
+        radSearchBookId.setText(bundle.getString("BookManagement.radSearchBookId.text")); // NOI18N
 
         radGroupSearch.add(radSearchTitle);
         radSearchTitle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchTitle.setText("Title");
+        radSearchTitle.setText(bundle.getString("BookManagement.radSearchTitle.text")); // NOI18N
         radSearchTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radSearchTitleActionPerformed(evt);
@@ -171,11 +185,11 @@ public class BookManagement extends javax.swing.JPanel {
 
         radGroupSearch.add(radSearchAuthor);
         radSearchAuthor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchAuthor.setText("Author");
+        radSearchAuthor.setText(bundle.getString("BookManagement.radSearchAuthor.text")); // NOI18N
 
         radGroupSearch.add(radSearchPublisher);
         radSearchPublisher.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        radSearchPublisher.setText("Publisher");
+        radSearchPublisher.setText(bundle.getString("BookManagement.radSearchPublisher.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -277,7 +291,7 @@ public class BookManagement extends javax.swing.JPanel {
 
         btnListAllBooks.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnListAllBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-to-do-list-18.png"))); // NOI18N
-        btnListAllBooks.setText("List all books");
+        btnListAllBooks.setText(bundle.getString("BookManagement.btnListAllBooks.text")); // NOI18N
         btnListAllBooks.setPreferredSize(new java.awt.Dimension(90, 25));
         btnListAllBooks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -357,7 +371,7 @@ public class BookManagement extends javax.swing.JPanel {
 
         add(jPanel4, java.awt.BorderLayout.LINE_END);
 
-        pnlDetailInformation.setBorder(javax.swing.BorderFactory.createTitledBorder("Detail Information"));
+        pnlDetailInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("BookManagement.pnlDetailInformation.border.title"))); // NOI18N
         pnlDetailInformation.setPreferredSize(new java.awt.Dimension(400, 590));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -388,19 +402,19 @@ public class BookManagement extends javax.swing.JPanel {
         );
 
         lblBookId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblBookId.setText("Book ID");
+        lblBookId.setText(bundle.getString("BookManagement.lblBookId.text")); // NOI18N
 
         lblBookTitle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblBookTitle.setText("Title");
+        lblBookTitle.setText(bundle.getString("BookManagement.lblBookTitle.text")); // NOI18N
 
         lblAuthor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblAuthor.setText("Author");
+        lblAuthor.setText(bundle.getString("BookManagement.lblAuthor.text")); // NOI18N
 
         lblPublisher.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblPublisher.setText("Publisher");
+        lblPublisher.setText(bundle.getString("BookManagement.lblPublisher.text")); // NOI18N
 
         lblPrice.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblPrice.setText("Price ($)");
+        lblPrice.setText(bundle.getString("BookManagement.lblPrice.text")); // NOI18N
 
         txaTitle.setColumns(20);
         txaTitle.setLineWrap(true);
@@ -418,7 +432,7 @@ public class BookManagement extends javax.swing.JPanel {
 
         btnCreateBook.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCreateBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-plus-+-18.png"))); // NOI18N
-        btnCreateBook.setText("Create");
+        btnCreateBook.setText(bundle.getString("BookManagement.btnCreateBook.text")); // NOI18N
         btnCreateBook.setPreferredSize(new java.awt.Dimension(130, 25));
         btnCreateBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,7 +442,7 @@ public class BookManagement extends javax.swing.JPanel {
 
         btnUpdateBook.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnUpdateBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-map-editing-18.png"))); // NOI18N
-        btnUpdateBook.setText("Update");
+        btnUpdateBook.setText(bundle.getString("BookManagement.btnUpdateBook.text")); // NOI18N
         btnUpdateBook.setPreferredSize(new java.awt.Dimension(130, 25));
         btnUpdateBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,7 +452,7 @@ public class BookManagement extends javax.swing.JPanel {
 
         btnDeleteBook.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDeleteBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-delete-bin-18.png"))); // NOI18N
-        btnDeleteBook.setText("Delete");
+        btnDeleteBook.setText(bundle.getString("BookManagement.btnDeleteBook.text")); // NOI18N
         btnDeleteBook.setPreferredSize(new java.awt.Dimension(140, 25));
         btnDeleteBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,7 +462,7 @@ public class BookManagement extends javax.swing.JPanel {
 
         btnCleanAll.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCleanAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-brush-18.png"))); // NOI18N
-        btnCleanAll.setText("Clean All");
+        btnCleanAll.setText(bundle.getString("BookManagement.btnCleanAll.text")); // NOI18N
         btnCleanAll.setPreferredSize(new java.awt.Dimension(140, 25));
         btnCleanAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1006,6 +1020,44 @@ public class BookManagement extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_radSearchTitleActionPerformed
 
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+
+        lblBookId.setText(resourceBundle.getString("BookManagement.lblBookId.text"));
+        radSearchAuthor.setText(resourceBundle.getString("BookManagement.radSearchAuthor.text"));
+        radSearchTitle.setText(resourceBundle.getString("BookManagement.radSearchTitle.text"));
+        radSearchBookId.setText(resourceBundle.getString("BookManagement.radSearchBookId.text"));
+        jLabel1.setText(resourceBundle.getString("BookManagement.jLabel1.text"));
+        btnSearch.setText(resourceBundle.getString("BookManagement.btnSearch.text"));
+        btnCleanAll.setText(resourceBundle.getString("BookManagement.btnCleanAll.text"));
+        btnDeleteBook.setText(resourceBundle.getString("BookManagement.btnDeleteBook.text"));
+        btnListAllBooks.setText(resourceBundle.getString("BookManagement.btnListAllBooks.text"));
+        btnUpdateBook.setText(resourceBundle.getString("BookManagement.btnUpdateBook.text"));
+        btnCreateBook.setText(resourceBundle.getString("BookManagement.btnCreateBook.text"));
+        radSearchPublisher.setText(resourceBundle.getString("BookManagement.radSearchPublisher.text"));
+        lblPrice.setText(resourceBundle.getString("BookManagement.lblPrice.text"));
+        lblPublisher.setText(resourceBundle.getString("BookManagement.lblPublisher.text"));
+        lblAuthor.setText(resourceBundle.getString("BookManagement.lblAuthor.text"));
+        lblBookTitle.setText(resourceBundle.getString("BookManagement.lblBookTitle.text"));
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCleanAll;

@@ -17,10 +17,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -31,6 +36,12 @@ public class CashierProfileManagement extends javax.swing.JPanel {
 
     private String userIdGlobal;
     private boolean verify;
+    
+    /*
+    Application language settings
+    */
+    private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
+    private String languageConfigFilePath = "language.properties";
 
     /**
      * Creates new form CashierProfileManagement
@@ -38,6 +49,7 @@ public class CashierProfileManagement extends javax.swing.JPanel {
     public CashierProfileManagement() {
         initComponents();
         showProfile();
+        this.setLanguage();
     }
 
     /**
@@ -121,11 +133,12 @@ public class CashierProfileManagement extends javax.swing.JPanel {
         jPanel6.setPreferredSize(new java.awt.Dimension(290, 260));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Position:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/softech/bookstoremanagement/gui/Bundle"); // NOI18N
+        jLabel3.setText(bundle.getString("CashierProfileManagement.jLabel3.text")); // NOI18N
 
         txtPosition.setEditable(false);
         txtPosition.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtPosition.setText("cashier");
+        txtPosition.setText(bundle.getString("CashierProfileManagement.txtPosition.text")); // NOI18N
         txtPosition.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPositionActionPerformed(evt);
@@ -133,16 +146,16 @@ public class CashierProfileManagement extends javax.swing.JPanel {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Password:");
+        jLabel4.setText(bundle.getString("CashierProfileManagement.jLabel4.text")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("User Name:");
+        jLabel1.setText(bundle.getString("CashierProfileManagement.jLabel1.text")); // NOI18N
 
         txtUserName.setEditable(false);
         txtUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Enter Password here to change information");
+        jLabel8.setText(bundle.getString("CashierProfileManagement.jLabel8.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -223,34 +236,34 @@ public class CashierProfileManagement extends javax.swing.JPanel {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("First Name:");
+        jLabel6.setText(bundle.getString("CashierProfileManagement.jLabel6.text")); // NOI18N
 
         txtFirstName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Last Name:");
+        jLabel7.setText(bundle.getString("CashierProfileManagement.jLabel7.text")); // NOI18N
 
         txtLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setText("Phone:");
+        jLabel9.setText(bundle.getString("CashierProfileManagement.jLabel9.text")); // NOI18N
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setText("Email:");
+        jLabel10.setText(bundle.getString("CashierProfileManagement.jLabel10.text")); // NOI18N
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel11.setText("New Password:");
+        jLabel11.setText(bundle.getString("CashierProfileManagement.jLabel11.text")); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setText("Retype Password:");
+        jLabel12.setText(bundle.getString("CashierProfileManagement.jLabel12.text")); // NOI18N
 
         btnReform.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnReform.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-brush-18.png"))); // NOI18N
-        btnReform.setText("Clean");
+        btnReform.setText(bundle.getString("CashierProfileManagement.btnReform.text")); // NOI18N
         btnReform.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReformActionPerformed(evt);
@@ -259,7 +272,7 @@ public class CashierProfileManagement extends javax.swing.JPanel {
 
         btnSaveProfile.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSaveProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-save-18.png"))); // NOI18N
-        btnSaveProfile.setText("Save Profile");
+        btnSaveProfile.setText(bundle.getString("CashierProfileManagement.btnSaveProfile.text")); // NOI18N
         btnSaveProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveProfileActionPerformed(evt);
@@ -268,7 +281,7 @@ public class CashierProfileManagement extends javax.swing.JPanel {
 
         btnShowProfile.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnShowProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softech/bookstoremanagement/icons/icons8-user-location-18.png"))); // NOI18N
-        btnShowProfile.setText("Show Profile");
+        btnShowProfile.setText(bundle.getString("CashierProfileManagement.btnShowProfile.text")); // NOI18N
         btnShowProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowProfileActionPerformed(evt);
@@ -653,6 +666,42 @@ public class CashierProfileManagement extends javax.swing.JPanel {
             //            Logger.getLogger(SignInUserInfo.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
+    }
+    
+    public void setLanguage() {
+        Locale locale;
+        String language = "";
+        Configurations languageConfigs = new Configurations();
+        
+        try {
+            Configuration languageConfig = languageConfigs.properties(new File(languageConfigFilePath));
+            language = languageConfig.getString("language");
+        } catch (ConfigurationException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        if (language.equals("vi")) {
+            locale = new Locale("vi", "VN");
+        } else {
+            locale = Locale.getDefault();
+        }
+        
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
+        
+        jLabel6.setText(resourceBundle.getString("CashierProfileManagement.jLabel6.text"));
+        btnShowProfile.setText(resourceBundle.getString("CashierProfileManagement.btnShowProfile.text"));
+        jLabel8.setText(resourceBundle.getString("CashierProfileManagement.jLabel8.text"));
+        btnSaveProfile.setText(resourceBundle.getString("CashierProfileManagement.btnSaveProfile.text"));
+        btnReform.setText(resourceBundle.getString("CashierProfileManagement.btnReform.text"));
+        jLabel1.setText(resourceBundle.getString("CashierProfileManagement.jLabel1.text"));
+        jLabel4.setText(resourceBundle.getString("CashierProfileManagement.jLabel4.text"));
+        jLabel12.setText(resourceBundle.getString("CashierProfileManagement.jLabel12.text"));
+        jLabel11.setText(resourceBundle.getString("CashierProfileManagement.jLabel11.text"));
+        jLabel3.setText(resourceBundle.getString("CashierProfileManagement.jLabel3.text"));
+        jLabel9.setText(resourceBundle.getString("CashierProfileManagement.jLabel9.text"));
+        jLabel7.setText(resourceBundle.getString("CashierProfileManagement.jLabel7.text"));
+        
+        
     }
 
 
