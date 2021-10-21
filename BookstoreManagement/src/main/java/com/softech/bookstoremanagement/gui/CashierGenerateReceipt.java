@@ -15,6 +15,7 @@ import com.softech.bookstoremanagement.database.models.Receipts;
 import com.softech.bookstoremanagement.database.models.Users;
 import com.softech.bookstoremanagement.database.utils.DatabaseUtils;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -962,6 +963,9 @@ public class CashierGenerateReceipt extends javax.swing.JPanel {
             printReceiptPdf.exportReceipt();
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             JOptionPane.showMessageDialog(this, "Create And Export Receipt Successfully", "Create Receipt", JOptionPane.INFORMATION_MESSAGE);
+            String exportedPDFFilePath = "exported_receipts/" + printReceiptPdf.getExportedFilePath();
+            File manualFile = new File(exportedPDFFilePath).getAbsoluteFile();
+            Desktop.getDesktop().open(manualFile);
         } catch (IOException ex) {
 //            Logger.getLogger(TestExportReceipt.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();

@@ -56,6 +56,8 @@ public class PrintReceiptPdf {
     private BaseFont bfBold;
     private BaseFont bf;
     private int pageNumber = 0;
+    
+    private String exportedPDFFilePath;
 
     public PrintReceiptPdf() {
 
@@ -78,6 +80,11 @@ public class PrintReceiptPdf {
     public void exportReceipt() {
         String pdfFilename = "Receipt_" + System.currentTimeMillis() + ".pdf";
         this.createPDF(pdfFilename);
+        exportedPDFFilePath = pdfFilename;
+    }
+    
+    public String getExportedFilePath() {
+        return exportedPDFFilePath;
     }
 
     private void createPDF(String pdfFilename) {
