@@ -10,6 +10,7 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.softech.bookstoremanagement.database.models.Users;
 import java.awt.Cursor;
 import java.awt.Desktop;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -61,7 +62,7 @@ public class CashierMain extends javax.swing.JFrame {
     /*
     Manual file path
      */
-    private String manualFilePath = "help_file/help.pdf";
+    private String manualFilePath = "help.pdf";
 
     private static Users userInfo = null;
     private static String userInfoFilePath = "signin_info/signin_info.bin";
@@ -103,6 +104,8 @@ public class CashierMain extends javax.swing.JFrame {
         mniDarkTheme.setActionCommand("Dark");
         
         this.setLanguage();
+        
+//        setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/com/softech/bookstoremanagement/icons/LogoSizeL.png"));
     }
 
     /**

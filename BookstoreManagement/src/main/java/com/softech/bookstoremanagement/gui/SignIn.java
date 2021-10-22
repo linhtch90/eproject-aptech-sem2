@@ -12,6 +12,7 @@ import com.softech.bookstoremanagement.LoginHelpers.DataValidatorLogin;
 import com.softech.bookstoremanagement.LoginHelpers.MessageDialogLogin;
 import com.softech.bookstoremanagement.LoginHelpers.SharedDataLogin;
 import java.awt.Cursor;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -50,6 +51,8 @@ public class SignIn extends javax.swing.JFrame {
         radCashier.setActionCommand("cashier");
         
         this.setLanguage();
+        
+//        setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/com/softech/bookstoremanagement/icons/LogoSizeL.png"));
     }
 
     /**
