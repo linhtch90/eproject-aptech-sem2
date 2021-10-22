@@ -69,13 +69,13 @@ public class PrintReceiptPdf {
         this.user = user;
     }
 
-    public static void main(String[] args) {
-
-        String pdfFilename = "Receipt_" + System.currentTimeMillis() + ".pdf";
-        PrintReceiptPdf generateInvoice = new PrintReceiptPdf();
-        generateInvoice.createPDF(pdfFilename);
-
-    }
+//    public static void main(String[] args) {
+//
+//        String pdfFilename = "Receipt_" + System.currentTimeMillis() + ".pdf";
+//        PrintReceiptPdf generateInvoice = new PrintReceiptPdf();
+//        generateInvoice.createPDF(pdfFilename);
+//
+//    }
     
     public void exportReceipt() {
         String pdfFilename = "Receipt_" + System.currentTimeMillis() + ".pdf";
