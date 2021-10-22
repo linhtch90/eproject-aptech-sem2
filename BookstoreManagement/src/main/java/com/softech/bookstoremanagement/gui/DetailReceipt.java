@@ -414,11 +414,11 @@ public class DetailReceipt extends javax.swing.JFrame {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(bundlePath, locale);
         
         jLabel2.setText(resourceBundle.getString("DetailReceipt.jLabel2.text"));
-        jLabel1.setText(resourceBundle.getString("BookManagement.jLabel1.text"));
-        jLabel5.setText(resourceBundle.getString("BookManagement.jLabel5.text"));
-        jLabel4.setText(resourceBundle.getString("BookManagement.jLabel4.text"));
-        jLabel7.setText(resourceBundle.getString("BookManagement.jLabel7.text"));
-        jLabel3.setText(resourceBundle.getString("BookManagement.jLabel3.text"));
+        jLabel1.setText(resourceBundle.getString("DetailReceipt.jLabel1.text"));
+        jLabel5.setText(resourceBundle.getString("DetailReceipt.jLabel5.text"));
+        jLabel4.setText(resourceBundle.getString("DetailReceipt.jLabel4.text"));
+        jLabel7.setText(resourceBundle.getString("DetailReceipt.jLabel7.text"));
+        jLabel3.setText(resourceBundle.getString("DetailReceipt.jLabel3.text"));
     }
     
 
