@@ -300,7 +300,9 @@ public class ListReceipts extends javax.swing.JPanel {
                 receiptsDao.cancelReceiptStatus(receiptIdGlobal);
                 this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 JOptionPane.showMessageDialog(this, "Cancel Receipt Successfully", "Cancel Receipt", JOptionPane.INFORMATION_MESSAGE);
+                this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
                 reloadListReceipts();
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             } catch (IOException ex) {
 //            Logger.getLogger(CashierGenerateReceipt.class.getName()).log(Level.SEVERE, null, ex);
                 ex.printStackTrace();
