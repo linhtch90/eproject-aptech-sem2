@@ -54,16 +54,16 @@ public class SaleStatistics extends javax.swing.JPanel {
     private String bundlePath = "com.softech.bookstoremanagement.gui.Bundle";
     private String languageConfigFilePath = "language.properties";
 
-    public SaleStatistics() {
+    public SaleStatistics() {        
         bookIndex = 0;
         initComponents();
+        this.setLanguage();
         getSaleData();
         exportChartToFile();
         showChartFromFile();
         getTopFiveBooks();
-        showBook(bookIndex);
+        showBook(bookIndex);        
         
-        this.setLanguage();
     }
 
     /**
@@ -93,6 +93,11 @@ public class SaleStatistics extends javax.swing.JPanel {
         lblPublisher = new javax.swing.JLabel();
         lblPrev = new javax.swing.JLabel();
         lblNext = new javax.swing.JLabel();
+        lblTitleContent = new javax.swing.JLabel();
+        lblAuthorContent = new javax.swing.JLabel();
+        lblPublisherContent = new javax.swing.JLabel();
+        lblPriceContent = new javax.swing.JLabel();
+        lblSoldContent = new javax.swing.JLabel();
 
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setPreferredSize(new java.awt.Dimension(1000, 520));
@@ -214,6 +219,21 @@ public class SaleStatistics extends javax.swing.JPanel {
             }
         });
 
+        lblTitleContent.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTitleContent.setText(bundle.getString("SaleStatistics.lblTitleContent.text")); // NOI18N
+
+        lblAuthorContent.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblAuthorContent.setText(bundle.getString("SaleStatistics.lblAuthorContent.text")); // NOI18N
+
+        lblPublisherContent.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPublisherContent.setText(bundle.getString("SaleStatistics.lblPublisherContent.text")); // NOI18N
+
+        lblPriceContent.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPriceContent.setText(bundle.getString("SaleStatistics.lblPriceContent.text")); // NOI18N
+
+        lblSoldContent.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblSoldContent.setText(bundle.getString("SaleStatistics.lblSoldContent.text")); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -222,29 +242,37 @@ public class SaleStatistics extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblAuthor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblSoldCopies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPublisher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPublisher, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                            .addComponent(lblAuthor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTitleContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblAuthorContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPublisherContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPriceContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSoldContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(lblPrev)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblCurrentBook)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNext)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(118, 118, 118)
+                                .addComponent(lblPrev)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblCurrentBook)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblNext))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 31, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,15 +280,25 @@ public class SaleStatistics extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitle)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitle)
+                    .addComponent(lblTitleContent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblAuthor)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAuthor)
+                    .addComponent(lblAuthorContent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblPublisher)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPublisher)
+                    .addComponent(lblPublisherContent))
                 .addGap(12, 12, 12)
-                .addComponent(lblPrice)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPrice)
+                    .addComponent(lblPriceContent))
                 .addGap(11, 11, 11)
-                .addComponent(lblSoldCopies)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSoldCopies)
+                    .addComponent(lblSoldContent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNext)
@@ -433,15 +471,15 @@ public class SaleStatistics extends javax.swing.JPanel {
             String authors = book.getAuthors();
             float price = book.getPrice();
             String publisher = book.getPublisher();
-            if (title.length() < 60) {
-                lblTitle.setText("Title: " + title);
+            if (title.length() < 45) {
+                lblTitleContent.setText(title);
             } else {
-                lblTitle.setText("Title: " + title.substring(0, 54) + "...");
+                lblTitleContent.setText(title.substring(0, 45) + "...");
             }
-            lblAuthor.setText("Author: " + authors);
-            lblPublisher.setText("Publisher: " + publisher);
-            lblPrice.setText("Price: $" + String.valueOf(price));
-            lblSoldCopies.setText("Sold: " + soldCopies);
+            lblAuthorContent.setText(authors);
+            lblPublisherContent.setText(publisher);
+            lblPriceContent.setText(String.valueOf(price));
+            lblSoldContent.setText(soldCopies);
 
             ByteArrayInputStream coverPhotoInputStream = new ByteArrayInputStream(book.getCoverPhoto());
             java.awt.Image coverPhoto = null;
@@ -505,14 +543,19 @@ public class SaleStatistics extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblAuthor;
+    private javax.swing.JLabel lblAuthorContent;
     private javax.swing.JLabel lblChart;
     private javax.swing.JLabel lblCoverPhoto;
     private javax.swing.JLabel lblCurrentBook;
     private javax.swing.JLabel lblNext;
     private javax.swing.JLabel lblPrev;
     private javax.swing.JLabel lblPrice;
+    private javax.swing.JLabel lblPriceContent;
     private javax.swing.JLabel lblPublisher;
+    private javax.swing.JLabel lblPublisherContent;
+    private javax.swing.JLabel lblSoldContent;
     private javax.swing.JLabel lblSoldCopies;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTitleContent;
     // End of variables declaration//GEN-END:variables
 }
